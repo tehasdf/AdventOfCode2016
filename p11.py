@@ -56,7 +56,7 @@ def possible(items, cache={}):
             else:
                 microchips.add(i)
         cache[h] = not generators or not microchips \
-            or not generators - microchips
+            or not microchips - generators
     return cache[h]
 
 
@@ -74,6 +74,5 @@ def p1(start_floors):
                 newstates.append(nextstate)
         states = newstates
         print i, len(states)
-
 
 print p1(PART_1)

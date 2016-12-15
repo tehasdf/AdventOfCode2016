@@ -15,10 +15,10 @@ def p1(salt, rounds=1, cachesize=25000):
     found = 0
     while found < 64:
         m = re.search('(.)\\1\\1', hashcache[ix])
+        ix += 1
         if m:
             c = m.group(0)[0] * 5
-            found += any(c in h for h in hashcache[ix + 1:ix + 1001])
-        ix += 1
+            found += any(c in h for h in hashcache[ix:ix + 1000])
     return ix - 1
 
 # print p1('abc')

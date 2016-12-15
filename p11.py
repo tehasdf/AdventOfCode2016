@@ -38,11 +38,29 @@ def nextstates(state, floor_map=FLOOR_MAP):
             newfloors = tuple(newfloors)
 
             newstate = (where_to_go, newfloors)
-            h = hash(newstate)
+            h = hashstate(newstate)
             if h not in SEEN:
                 SEEN.add(h)
                 ret.append(newstate)
     return ret
+
+
+def hashstate(state):
+    current_floor, floors = state
+    chips = {}
+    gens = {}
+    for num, floor in enumerate(floors):
+        for kind, item in floor:
+            if kind == 'chip':
+                chips[item] = num
+            elif kind == 'gen':
+                gens[item] = num
+
+    pairs = []
+    for item, floor in chips.items():
+        pairs.append((floor, gens[item]))
+    items = tuple(sorted(pairs))
+    return hash((current_floor, items))
 
 
 def possible(items, cache={}):
@@ -75,4 +93,4 @@ def p1(start_floors):
         states = newstates
         print i, len(states)
 
-print p1(PART_1)
+print p1(PART_2)

@@ -13,31 +13,31 @@ print_int:
 
 section .text
 main:
-    mov r8, 1
-
-    l1:
-        mov rcx, startpos
-        mov r11, discs
-        mov r9, discs
-        l2:
-            movzx rax, byte [rcx]
+    mov r8, 1  ; t
+    mov rax, 0
+    l1:  ; iterate over t
+        mov rcx, startpos  ; iterator over startpos
+        mov r9, discs  ; end boundary for startpos
+        mov r11, discs  ; iterator over discs
+        l2:  ; iterate over startpos and discs
+            movzx rax, byte [rcx]  ; compute (t + startpos[i]) % discs[i]
             add rax, r8
             movzx r15, byte [r11]
             xor rdx, rdx
             div r15
             cmp rdx, 0
-            jne nonzero
+            jne nonzero  ; if any of them is nonzero, continue to the next t
 
             inc r11
             inc rcx
 
             cmp rcx, r9
-            jne l2
-        jmp success
+            jne l2  ; next disc
+        jmp success  ; all discs checked and we didnt jmp to nonzero - all are 0
 
         nonzero:
-        inc r8
-        jmp l1
+            inc r8
+            jmp l1
 
     success:
         mov rdi, print_int

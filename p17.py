@@ -19,8 +19,7 @@ def _winning_states(inp):
                 states.append((steps, pos))
 
 
-def p1(inp):
-    return max(_winning_states(inp), key=len)  # s/max/min/ for part 1
+def p1(inp, part=1):
+    return {1: min, 2: max}[part](_winning_states(inp), key=len)
 
-# print p1('ihgpwlah')
-print p1('gdjjyniy')
+print p1('gdjjyniy', part=2)

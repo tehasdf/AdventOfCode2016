@@ -59,8 +59,10 @@ def hashstate(state):
     pairs = []
     for item, floor in chips.items():
         pairs.append((floor, gens[item]))
-    items = tuple(sorted(pairs))
-    return hash((current_floor, items))
+    total = current_floor << 30
+    for i, (a, b) in enumerate(sorted(pairs)):
+        total += (a << (i * 4)) + (b << (i * 4 + 2))
+    return total
 
 
 def possible(items, cache={}):

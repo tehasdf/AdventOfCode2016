@@ -9,21 +9,17 @@ def make_next_states(state):
             yield inp + l, (x + xd, y + yd)
 
 
-def p1(inp):
+def _winning_states(inp):
     states = [(inp, (0, 0))]
-    highest = 0
-    for i in xrange(1, 99999999):
-        next_states = []
-        for state in states:
-            for nextstate in make_next_states(state):
-                if nextstate[1] == (3, 3):
-                    highest = i  # part1: return nextstate
-                else:
-                    next_states.append(nextstate)
-        states = next_states
-        if not states:
-            return highest
+    while states:
+        for steps, pos in make_next_states(states.pop()):
+            if pos == (3, 3):
+                yield steps
+            else:
+                states.append((steps, pos))
 
 
-# print p1('ihgpwlah')
-print p1('gdjjyniy')
+def p1(inp, part=1):
+    return {1: min, 2: max}[part](_winning_states(inp), key=len)
+
+print p1('gdjjyniy', part=2)

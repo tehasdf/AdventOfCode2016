@@ -2,9 +2,9 @@ from collections import deque
 
 
 def p1(a):
-    e = deque(range(1, a + 1))
+    e = deque(xrange(1, a + 1))
     while len(e) > 1:
-        e.append(e.popleft())
+        e.rotate(-1)
         e.popleft()
     return e
 
@@ -18,5 +18,5 @@ def p2(n):
             e.rotate(-1)
     return e
 
-
 print p2(3001330)
+# print p2(3014603)
